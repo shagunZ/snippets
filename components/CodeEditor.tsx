@@ -17,18 +17,26 @@ import "ace-builds/src-noconflict/mode-typescript"
 import "ace-builds/src-noconflict/mode-c_cpp"
 import "ace-builds/src-noconflict/mode-csharp"
 
-const CodeEditor = () => {
+interface CodeEditorProps{
+  onCodeChange: (code:string)=>void; 
+  language : string; 
+  theme: string; 
+  icon: string; 
+  background?:string; 
+  currentPadding?: string; 
+}
+const CodeEditor = ({onCodeChange,language,theme,icon,background,currentPadding}) => {
   return (
     <Resizable minHeight={450}
     minWidth={500}
     maxWidth={1000}>
         <div>
             <AceEditor
-            value='function(){return "helloworld"}' 
-            showGutter={false}
+            value="function(){return 'hello world'}"
             theme="monokai"
             name="UNIQUE_ID_OF_DIV"
-            mode={"javascipt"}
+            mode={language.toLocaleLowerCase()}
+            showGutter={false}
             fontSize={16}
             wrapEnabled={true}
             showPrintMargin={false}
