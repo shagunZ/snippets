@@ -77,7 +77,7 @@ const CodeEditor = ({onCodeChange,language,theme,icon,background,currentPadding}
           </div>
             <AceEditor
             value="function(){return 'hello world'}"
-            theme="monokai"
+            theme={theme}
             name="UNIQUE_ID_OF_DIV"
             mode={language.toLocaleLowerCase()}
             showGutter={false}
