@@ -1,6 +1,6 @@
 "use client";
 
-import React from 'react'
+import React,{useEffect} from 'react'
 import { Resizable } from 're-resizable';
 import AceEditor from "react-ace";
 //themes
@@ -25,12 +25,56 @@ interface CodeEditorProps{
   background?:string; 
   currentPadding?: string; 
 }
-const CodeEditor = ({onCodeChange,language,theme,icon,background,currentPadding}) => {
+const CodeEditor = ({onCodeChange,language,theme,icon,background,currentPadding}:CodeEditorProps) => {
+  const [width,setWidth] = React.useState(1000);
+  const [height,setHeight] = React.useState<number|null>(500);
+
+  //@ts-ignore
+  const handleResize=(evt,direction,ref,pos)=>{
+    const newHeight = ref.style.height; 
+    setHeight(parseInt(newHeight));
+  };
+
+  const updateSize=()=>{
+    setWidth(window.innerWidth);
+  };
+
+  useEffect(()=>{
+    window.addEventListener("resize",updateSize);
+    updateSize();
+    return()=>window.removeEventListener("resize",updateSize);
+  },[])
+
   return (
     <Resizable minHeight={450}
     minWidth={500}
-    maxWidth={1000}>
-        <div>
+    maxWidth={1000}
+    defaultSize={{
+      width:width,
+      height:height || 500,
+    }}
+    onResize={handleResize}
+    className='resize-container relative'
+    style={{background: "red"}}
+    >
+        <div className='code-block'>
+          <div className='code-title h-[52px] px-4 flex items-center justify-between bg-black bg-opacity-80'>
+            <div className='dots flex item-center gap-1'>
+              <div className='w-3 h-3 rounded-full bg-[#ff5656]'></div>
+              <div className='w-3 h-3 rounded-full bg-[#ffbc6a]'></div>
+              <div className='w-3 h-3 rounded-full bg-[#67f772]'></div>
+            </div>
+
+<div className='input-control w-full'>
+  <input type="text" className='w-full text-[hsla(0,0%,100%,.6)] outline-none font-medium text-center bg-transparent'
+  />
+</div>
+
+<div className='icon flex justify-center items-center p-1 bg-black bg-opacity-30 rounded-sm'>
+  <img src={icon} alt="ic" />
+</div>
+
+          </div>
             <AceEditor
             value="function(){return 'hello world'}"
             theme="monokai"
