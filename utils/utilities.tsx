@@ -23,10 +23,6 @@ export const languages = [
         name:"CSS",
         icon: "icons/css.svg"
     },
-    {
-        name:"JavaScript",
-        icon: "icons/javascirpt.svg"
-    },
 
 ];
 
@@ -50,3 +46,24 @@ export const backgrounds = [
     "linear-gradient(140deg, rgb(165, 142, 251), rgb(233, 191, 248))",
     "linear-gradient(270deg,#514a9d,#24c6dc)",
   ];
+
+  export const getExtension = (language: string) => {
+    switch (language) {
+      case "JavaScript":
+        return ".js";
+      case "HTML":
+        return ".html";
+      case "CSS":
+        return ".css";
+      case "Python":
+        return ".py";
+      case "Java":
+        return ".java";
+      case "TypeScript":
+        return ".ts";
+      default:
+        return ".js";
+    }
+  };
+
+  export const initialCode =`function(){return 'hello world'}` ; 

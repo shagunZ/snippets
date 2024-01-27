@@ -7,6 +7,7 @@ import AceEditor from "react-ace";
 import "ace-builds/src-noconflict/theme-monokai"
 import "ace-builds/src-noconflict/theme-terminal"
 import "ace-builds/src-noconflict/theme-twilight"
+import {getExtension,initialCode} from "@/utils/utilities"
 //languages 
 import "ace-builds/src-noconflict/mode-javascript"
 import "ace-builds/src-noconflict/mode-css"
@@ -18,21 +19,26 @@ import "ace-builds/src-noconflict/mode-c_cpp"
 import "ace-builds/src-noconflict/mode-csharp"
 
 interface CodeEditorProps{
-  onCodeChange: (code:string)=>void; 
   language : string; 
   theme: string; 
   icon: string; 
   background?:string; 
   currentPadding?: string; 
 }
-const CodeEditor = ({onCodeChange,language,theme,icon,background,currentPadding}:CodeEditorProps) => {
+const CodeEditor = ({language,theme,icon,background,currentPadding}:CodeEditorProps) => {
   const [width,setWidth] = React.useState(1000);
   const [height,setHeight] = React.useState<number|null>(500);
+  const [title,setTitle] = React.useState("Unitiled");
+  const [code,setCode] = React.useState(initialCode);
+
+  const handleCodeChange= (newCode: string)=>{
+    setCode(newCode);
+  }
 
   //@ts-ignore
   const handleResize=(evt,direction,ref,pos)=>{
     const newHeight = ref.style.height; 
-    setHeight(parseInt(newHeight));
+    setHeight(parseInt(newHeight,10)+1);
   };
 
   const updateSize=()=>{
@@ -55,7 +61,7 @@ const CodeEditor = ({onCodeChange,language,theme,icon,background,currentPadding}
     }}
     onResize={handleResize}
     className='resize-container relative'
-    style={{background: background}}
+    style={{background: background, borderRadius:"6px"}}
     >
         <div className='code-block' style={{padding: currentPadding}}>
           <div className='code-title h-[52px] px-4 flex items-center justify-between bg-black bg-opacity-80'>
@@ -66,27 +72,35 @@ const CodeEditor = ({onCodeChange,language,theme,icon,background,currentPadding}
             </div>
 
 <div className='input-control w-full'>
-  <input type="text" className='w-full text-[hsla(0,0%,100%,.6)] outline-none font-medium text-center bg-transparent'
+  <input 
+  type="text"
+  value={title}
+  onChange={(e)=>setTitle(e.target.value)} 
+  className='w-full text-[hsla(0,0%,100%,.6)] outline-none font-medium text-center bg-transparent'
   />
 </div>
 
 <div className='icon flex justify-center items-center p-1 bg-black bg-opacity-30 rounded-sm'>
-  <img src={icon} alt="ic" />
+  <img src={icon} alt="icon"
+   className='w-[35px]'
+   />
 </div>
 
           </div>
             <AceEditor
-            value="function(){return 'hello world'}"
+            value={code}
             theme={theme}
             name="UNIQUE_ID_OF_DIV"
             mode={language.toLocaleLowerCase()}
             showGutter={false}
             fontSize={16}
+            height={`calc(${height}px - ${currentPadding} - ${currentPadding} - 52px)`}
             wrapEnabled={true}
             showPrintMargin={false}
             highlightActiveLine={false}
             editorProps={{$blockScrolling:true}}
-            className="ace-editor-container"/>
+            className="ace-editor-container"
+            onChange={handleCodeChange}/>
         </div>
     </Resizable>
   )
