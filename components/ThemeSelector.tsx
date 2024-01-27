@@ -20,11 +20,12 @@ const handleThemeChange = (newTheme: string)=>{
     setTheme(newTheme);
 }
 
+
     return (
     <OutsideClickHandler onOutsideClick={()=>setShowDropdown(false)}>
 
     <div className='theme-selector' onClick={toggleDropdown}>
-         <p className='py-[5px] text-sm font-medium'>Language</p>
+         <p className='py-[5px] text-sm font-medium'>Code Color</p>
     <div className='dropdown-title capitalize w-[120px]'>
       {theme}
     <ChevronDown/>
@@ -34,7 +35,7 @@ const handleThemeChange = (newTheme: string)=>{
             {themes.map((theme,i)=>{
             return (
             <button key={i} onClick={()=>handleThemeChange(theme)}
-            className='capitalize text-left'>
+            className='capitalize cursor-pointer text-left  hover:text-white ease-linear transition-all duration-300'>
                 {theme}
             </button>
         )})}</div>)}

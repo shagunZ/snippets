@@ -42,7 +42,7 @@ const SelectLanguage = ({language,setLanguage,setActiveIcon}:SelectLanguageProps
         {languages.map((lang,i)=>{
           return(
             <div key={i}>
-              <button className='dropdown-item text-left'
+              <button className='dropdown-item text-left  hover:text-white ease-linear transition-all duration-300'
               onClick={()=>handleLanguageChange(lang.name)}>
                 {lang.name}
               </button>

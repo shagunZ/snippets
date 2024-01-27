@@ -1,19 +1,24 @@
 "use client"
 import BgSelector from "@/components/BgSelector";
 import CodeEditor from "@/components/CodeEditor";
+import PaddingSelector from "@/components/PaddingSelector";
 import SelectLanguage from "@/components/SelectLanguage";
 import ThemeSelector from "@/components/ThemeSelector";
 import { backgrounds, languages, themes } from "@/utils/utilities";
 import { useState } from "react";
 
 export default function Home() {
-  const [language,setLanguage] = useState(languages[0].name);
+ 
+const [language,setLanguage] = useState(languages[0].name);
 
 const [activeIcon,setActiveIcon] = useState(languages[0].icon);
 
 const [theme,setTheme] = useState(themes[0]);
 
 const [background,setBackground] = useState(backgrounds[0]);
+
+const [paddings,setPaddings] = useState(["1rem","2rem","3rem","4rem","5rem"]);
+const [currentPadding,setCurrentPadding] = useState(paddings[2]);
 
   return <main className="h-[100vh] flex flex-col items-center justify-betweeen">
   
@@ -25,12 +30,20 @@ const [background,setBackground] = useState(backgrounds[0]);
 
 <BgSelector background={background} setBackground={setBackground}/>
 
+<PaddingSelector 
+paddings={paddings} 
+currentPadding={currentPadding} 
+setCurrentPadding={setCurrentPadding}/>
     </header>
 
 <div className="code-editor-ref mt-[14rem]
 ">
-  <CodeEditor language={language} icon={activeIcon}
-  theme={theme} background={background}/>
+  <CodeEditor 
+  language={language} 
+  icon={activeIcon}
+  theme={theme} 
+  background={background} 
+  currentPadding={currentPadding}/>
 </div>
   </main>
 }
