@@ -9,6 +9,7 @@ import { useRef, useState } from "react";
 import { Download } from "lucide-react";
 import Footer from "@/components/Footer";
 import html2canvas from "html2canvas";
+import CodeGen from "@/components/CodeGen";
 
 export default function Home() {
  
@@ -98,6 +99,7 @@ onClick={exportPng}>
   background={background} 
   currentPadding={currentPadding}/>
 </div>
+<CodeGen/>
 <Footer/>
   </main>
 }
