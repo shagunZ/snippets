@@ -6,7 +6,7 @@
 //     reactStrictMode: true,
 //     env: {
 //         API_KEY: process.env.API_KEY,
-//         ORG_KEY: process.env.API_KEY2,
+//         ORG_KEY: process.env.ORG_KEY,
 //     },
 // };
 
@@ -17,7 +17,8 @@ dotenvConfig();
 export default {
   reactStrictMode: true,
   env: {
-    WORQHAT_API_KEY: process.env.API_KEY,
-    WORQHAT_ORG_KEY: process.env.API_KEY2,
+    API_KEY: process.env.API_KEY,
+    ORG_KEY: process.env.ORG_KEY,
   },
 };
+

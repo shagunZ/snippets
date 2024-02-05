@@ -1,22 +1,53 @@
 // @refresh
 "use client"
-import React from 'react';
+import React,{useState} from 'react';
 import dynamic from 'next/dynamic';
 
 const Editor = dynamic(() => import('@monaco-editor/react'), { ssr: false });
 
+//prompt
+const createPrompt = (inputLanguage: string, inputCode: string) => {
+  return `
+You are an expert programmer in all programming languages. Translate the natural language to "${inputLanguage}" code. Do not include \\\\.
+
+Example translating from natural language to JavaScript:
+
+Natural language:
+Print the numbers 0 to 9.
+
+JavaScript code:
+for (let i = 0; i < 10; i++) {
+    console.log(i);
+}
+
+Natural language:
+${inputCode}
+
+${inputLanguage} code (no \\\\):
+`;
+};
+
+
+
+
 
 const page = () => {
-
+  const [generatedCode, setGeneratedCode] = useState('');
+  const [selectedLanguage,setSelectedLanguage] = useState('');
+  const [loading,setLoading] = useState(false);
 
   async function fetchAIResponse(selectedLanguage: string, question: string) {
     const API_ENDPOINT = 'https://api.worqhat.com/api/ai/content/v2';
+    // const API_ENDPOINT = 'http://localhost:3000/api/ai/content/v2';
+
+    const API_KEY = process.env.API_KEY;
+    const ORG_KEY = process.env.ORG_KEY;
   
-    const API_KEY = process.env.WORQHAT_API_KEY;
-    const ORG_KEY = process.env.WORQHAT_API_KEY2;
-  
-    const prompt = "This is the command that will be sent to the API";
-  
+    const prompt = createPrompt(selectedLanguage,question);
+  console.log("api",API_KEY);
+  console.log("orgkey",ORG_KEY);
+  console.log("end",API_ENDPOINT);
+
     const headers: Record<string, string> = {
       'Content-Type': 'application/json',
     };
@@ -25,9 +56,9 @@ const page = () => {
       headers['x-api-key'] = API_KEY;
     }
   
-    if (ORG_KEY) {
-      headers['x-org-key'] = ORG_KEY;
-    }
+    // if (ORG_KEY) {
+    //   headers['x-org-key'] = ORG_KEY;
+    // }
   
     const requestOptions: RequestInit = {
       method: 'POST',
@@ -37,18 +68,30 @@ const page = () => {
         randomness: 0.4,
       }),
     };
-  
+
     try {
       const response = await fetch(API_ENDPOINT, requestOptions);
+      console.log('Response Status:', response.status);
+      console.log('Response Headers:', response.headers);
+      const responseBody = await response.text();
+      console.log('Response Body:', responseBody);
+    
+      if (!response.ok) {
+        console.error(`Error: ${response.status} - ${response.statusText}`);
+        throw new Error('Non-successful response');
+      }
+    
       return await response.json();
     } catch (error) {
       console.error('Error in fetchAIResponse:', error);
       throw error; // Propagate the error
     }
+    
   }
   
 
   const handleGenerateCodeClick = async () => {
+    setLoading(true);
     try {
       const languageElement = document.getElementById('language') as HTMLSelectElement | null;
       const textboxElement = document.getElementById('textbox1') as HTMLInputElement | null;
@@ -57,18 +100,29 @@ const page = () => {
         const language = languageElement.value;
         const questionText = textboxElement.value;
   
-        // Perform some logic or make an API call based on language and questionText
-  
-        // For now, let's log the values to the console
-        console.log('Language:', language);
-        console.log('Question Text:', questionText);
+        const responseData = await fetchAIResponse(language, questionText);
+  console.log("res",responseData)
+        if (responseData && responseData.status === 'success') {
+          let responseCode = responseData.content || '';
+          if (responseCode.includes('```')) {
+            responseCode = responseCode.split('```')[1];
+          }
+          setGeneratedCode(responseCode);
+        } else {
+          setGeneratedCode('Sorry, we could not generate code for your question. Please try again.');
+        }
       } else {
-        alert('Language element or textbox element is null or undefined.');
+        console.log('Language element or textbox element is null or undefined.');
       }
     } catch (error) {
       console.error('Error in handleGenerateCodeClick:', error);
+      setGeneratedCode('An error occurred while generating code. Please try again.');
+    } finally {
+      setLoading(false);
     }
   };
+  
+  
   
   
 
@@ -109,8 +163,9 @@ const page = () => {
                  <div className="w-full text-center">
                     <button id="generateButton"
                             className="mx-auto text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg text-xl px-5 py-2.5 text-center mr-2 mb-2"
-                            onClick={handleGenerateCodeClick}>
-                       Generate Code
+                            onClick={handleGenerateCodeClick}
+                            >
+                      //  {loading? `Writing code....`: 'Generate Code'}
                     </button>
                  </div>
 
@@ -119,11 +174,11 @@ const page = () => {
 <div className="edit">
 <Editor
         height="400px"
-        language="javascript"
+        language={selectedLanguage}
         theme="vs-dark"
         defaultValue="// Generated code will appear here"
         defaultLanguage="javascript"
-        value="// Generated code will appear here"
+        value={generatedCode}
         options={{
             readOnly: true,
             wordWrap: "wordWrapRow", // Enable word wrapping at a specific column
