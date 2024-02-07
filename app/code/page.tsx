@@ -131,24 +131,7 @@ const page = () => {
   
 
   return (
-    <div className="text-black">
-       <header
-       style={{
-        color:'black',
-        maxWidth: '90%',
-margin: '0 auto',
-marginTop: '30px',
-padding: '1px',
-borderRadius: '8px',
-boxShadow: '0 0 10px rgba(0, 0, 0, 0.2)',
-      }}
-     className="gradient"> 
-              <h1 className="shadow-md blue_gradient text-4xl md:text-5xl text-center mt-6 font-bold">Text to Code,</h1>
-              <p className="orange_gradient text-center mt-4 text-xl md:text-2xl font-semibold">
-                in a Click!
-              </p>
-              </header>
-
+    <div className="text-black">             
               <div className="container"
               style={{
                 color:'black',
