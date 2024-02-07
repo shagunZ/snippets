@@ -68,23 +68,24 @@ const page = () => {
         randomness: 0.4,
       }),
     };
-
+    
     try {
-      const response = await fetch(API_ENDPOINT, requestOptions);
-      console.log('Response Status:', response.status);
-      console.log('Response Headers:', response.headers);
-      const responseBody = await response.text();
-      console.log('Response Body:', responseBody);
+        const response = await fetch(API_ENDPOINT, requestOptions);
+      console.log("reqoppt", response)
+    //   console.log('Response Status:', response.status);
+    //   console.log('Response Headers:', response.headers);
+    //   const responseBody = await response.text();
+    //   console.log('Response Body:', responseBody);
     
-      if (!response.ok) {
-        console.error(`Error: ${response.status} - ${response.statusText}`);
-        throw new Error('Non-successful response');
-      }
+    //   if (!response.ok) {
+    //     console.error(`Error: ${response.status} - ${response.statusText}`);
+    //     throw new Error('Non-successful response');
+    //   }
     
-      return await response.json();
+    //   return await response.json();
     } catch (error) {
       console.error('Error in fetchAIResponse:', error);
-      throw error; // Propagate the error
+    //   throw error; // Propagate the error
     }
     
   }
@@ -92,25 +93,28 @@ const page = () => {
 
   const handleGenerateCodeClick = async () => {
     setLoading(true);
+    
+    
     try {
       const languageElement = document.getElementById('language') as HTMLSelectElement | null;
       const textboxElement = document.getElementById('textbox1') as HTMLInputElement | null;
-  
+      
       if (languageElement && textboxElement) {
         const language = languageElement.value;
         const questionText = textboxElement.value;
-  
+        console.log("working")
+        
         const responseData = await fetchAIResponse(language, questionText);
   console.log("res",responseData)
-        if (responseData && responseData.status === 'success') {
-          let responseCode = responseData.content || '';
-          if (responseCode.includes('```')) {
-            responseCode = responseCode.split('```')[1];
-          }
-          setGeneratedCode(responseCode);
-        } else {
-          setGeneratedCode('Sorry, we could not generate code for your question. Please try again.');
-        }
+        // if (responseData && responseData.status === 'success') {
+        //   let responseCode = responseData.content || '';
+        //   if (responseCode.includes('```')) {
+        //     responseCode = responseCode.split('```')[1];
+        //   }
+        //   setGeneratedCode(responseCode);
+        // } else {
+        //   setGeneratedCode('Sorry, we could not generate code for your question. Please try again.');
+        // }
       } else {
         console.log('Language element or textbox element is null or undefined.');
       }
@@ -128,19 +132,31 @@ const page = () => {
 
   return (
     <div className="text-black">
-              <h1 className="text-4xl md:text-5xl text-center mt-8 font-bold">Text to Code Generator</h1>
-              <div className="text-center mt-8 text-xl md:text-2xl font-semibold">
-                 Generate Code from Natural Language using WorqHat AI in a Click!
-              </div>
+       <header
+       style={{
+        color:'black',
+        maxWidth: '90%',
+margin: '0 auto',
+marginTop: '30px',
+padding: '1px',
+borderRadius: '8px',
+boxShadow: '0 0 10px rgba(0, 0, 0, 0.2)',
+      }}
+     className="gradient"> 
+              <h1 className="shadow-md blue_gradient text-4xl md:text-5xl text-center mt-6 font-bold">Text to Code,</h1>
+              <p className="orange_gradient text-center mt-4 text-xl md:text-2xl font-semibold">
+                in a Click!
+              </p>
+              </header>
 
-              <div className="container "
+              <div className="container"
               style={{
                 color:'black',
                 maxWidth: '90%',
     margin: '0 auto',
     marginTop: '70px',
     padding: '20px',
-    backgroundColor: '#f5f5f5',
+    backgroundColor: '#ead9f4',
     borderRadius: '8px',
     boxShadow: '0 0 10px rgba(0, 0, 0, 0.2)',
               }}>

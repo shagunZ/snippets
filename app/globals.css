@@ -87,3 +87,37 @@ body{
   background: rgb(248 250 252);
   transition: all 0.4s ease-in-out;
 }
+
+
+.head_text {
+  @apply mt-5 text-5xl font-extrabold leading-[1.15] text-black sm:text-6xl text-center;
+}
+
+.orange_gradient {
+  @apply bg-gradient-to-r from-indigo-500 via-blue-600 to-cyan-500 bg-clip-text text-transparent;
+}
+
+.desc {
+  @apply mt-5 text-lg text-gray-600 sm:text-xl text-center max-w-2xl;
+}
+
+.gradient {
+  /* z-index: 3; */
+  /* width: 100%; */
+  background-image: radial-gradient(
+      at 27% 37%,
+      hsla(215, 98%, 61%, 1) 0px,
+      transparent 0%
+    ),
+    linear-gradient(140deg, rgb(165, 142, 251), rgb(233, 191, 248)),
+
+    /* radial-gradient(at 97% 21%, hsla(125, 98%, 72%, 1) 0px, transparent 50%),
+    radial-gradient(at 52% 99%, hsla(354, 98%, 61%, 1) 0px, transparent 50%), */
+    /* radial-gradient(at 10% 29%, hsla(256, 96%, 67%, 1) 0px, transparent 50%), */
+    /* radial-gradient(at 97% 96%, hsla(38, 60%, 74%, 1) 0px, transparent 50%), */
+    /* radial-gradient(at 33% 50%, hsla(222, 67%, 73%, 1) 0px, transparent 50%), */
+    radial-gradient(at 79% 53%, hsla(343, 68%, 79%, 1) 0px, transparent 50%);
+}
+.blue_gradient {
+  @apply font-black bg-gradient-to-r from-violet-600 to-blue-600 bg-clip-text text-transparent;
+}
