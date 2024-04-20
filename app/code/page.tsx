@@ -28,9 +28,6 @@ ${inputLanguage} code (no \\\\):
 };
 
 
-
-
-
 const page = () => {
   const [generatedCode, setGeneratedCode] = useState('');
   const [selectedLanguage,setSelectedLanguage] = useState('');
@@ -127,9 +124,6 @@ const page = () => {
   };
   
   
-  
-  
-
   return (
     <div className="text-black">             
               <div className="container"
@@ -161,10 +155,10 @@ const page = () => {
 
                  <div className="w-full text-center">
                     <button id="generateButton"
-                            className="mx-auto text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg text-xl px-5 py-2.5 text-center mr-2 mb-2"
+                            className="mx-auto text-white bg-gradient-to-br from-purple-600 to-violet-400 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg text-xl px-5 py-2.5 text-center mr-2 mb-2"
                             onClick={handleGenerateCodeClick}
                             >
-                      //  {loading? `Writing code....`: 'Generate Code'}
+                       {loading? `Writing code....`: 'Generate Code'}
                     </button>
                  </div>
 
@@ -187,8 +181,6 @@ const page = () => {
     />
     <br />
 </div>
-
-
 
               </div>
            </div>
