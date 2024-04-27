@@ -113,7 +113,7 @@ onChange={(e) => setSelectedLanguage(e.target.value)}
         value={ans}
         options={{
             readOnly: true,
-            wordWrap: "wordWrapRow", // Enable word wrapping at a specific column
+            wordWrap: "wordWrapColumn", // Enable word wrapping at a specific column
             wordWrapRow: 10,
         }}
         
