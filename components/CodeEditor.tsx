@@ -43,6 +43,7 @@ const CodeEditor = ({language,theme,icon,background,currentPadding}:CodeEditorPr
 
   const updateSize=()=>{
     setWidth(window.innerWidth);
+    console.log(window.innerWidth)
   };
 
   useEffect(()=>{
@@ -53,8 +54,8 @@ const CodeEditor = ({language,theme,icon,background,currentPadding}:CodeEditorPr
 
   return (
     <Resizable minHeight={450}
-    minWidth={500}
-    maxWidth={1000}
+    minWidth={300}
+    maxWidth={width-100}
     defaultSize={{
       width:width,
       height:height || 500,

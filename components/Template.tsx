@@ -7,11 +7,8 @@ import ThemeSelector from "@/components/ThemeSelector";
 import { backgrounds, languages, themes } from "@/utils/utilities";
 import { useRef, useState } from "react";
 import { Download } from "lucide-react";
-import Footer from "@/components/Footer";
 import html2canvas from "html2canvas";
-import CodeGen from "@/components/CodeGen";
-import Navbar from "@/components/Navbar";
-import Template from "@/components/Template";
+import CodeGen from "./CodeGen";
 export default function Home() {
  
 const [language,setLanguage] = useState(languages[0].name);
@@ -68,10 +65,41 @@ if(editorEle){
 }
 
   return <main className="h-[100vh] flex flex-col items-center justify-betweeen">
-  <Navbar />
-  
-{/* <Template/> */}
-{/* <CodeGen/> */}
-<Footer/>
+    {/* <header
+     className="mt-6 grid grid-flow-col sm:grid-rows-2 grid-rows-3 md:flex gap-6  md:w-[850px] p-5 fixed top-0 left-1/2 translate-x-[-50%]
+    z-10 bg-[#191919] rounded border border-[#3C3C3C] shadow-md">  */}
+     <header
+        className="mt-[143px] grid grid-flow-col sm:grid-rows-2 grid-rows-3 md:flex gap-6 md:w-[850px] p-5 sticky top-10 z-10 bg-[#191919] rounded border border-[#3C3C3C] shadow-md"
+        style={{ top: "10px" }} // Adjust top value here
+      >
+      <SelectLanguage language={language} setLanguage={setLanguage} setActiveIcon={setActiveIcon}/>
+<ThemeSelector theme={theme} setTheme={setTheme}/>
+
+<BgSelector background={background} setBackground={setBackground}/>
+
+<PaddingSelector 
+paddings={paddings} 
+currentPadding={currentPadding} 
+setCurrentPadding={setCurrentPadding}/>
+
+<div className="export-btn self-center ml-auto">
+<button className="py-2 px-3 gap-3 rounded-md flex items-center text-sm bg-blue-400 text-blue-400 font-medium bg-opacity-10 
+hover:bg-opacity-80 hover:text-slate-50 ease-in-out transition-all curation-300 "
+onClick={exportPng}>
+  Export PNG
+  <Download/>
+</button>
+</div>
+    </header>
+
+<div className="code-editor-ref mt-[4rem]" ref={editorRef}>
+  <CodeEditor 
+  language={language} 
+  icon={activeIcon}
+  theme={theme} 
+  background={background} 
+  currentPadding={currentPadding}/>
+</div>
+<CodeGen/>
   </main>
 }

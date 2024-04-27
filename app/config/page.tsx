@@ -2,6 +2,7 @@
 import React, { useState } from 'react'
 import axios from 'axios';
 import dynamic from 'next/dynamic';
+import { CopyToClip } from '@/components/CopyToClip';
 
 const Editor = dynamic(() => import('@monaco-editor/react'), { ssr: false });
 
@@ -54,9 +55,10 @@ ${selectedLanguage} code (no \\\\):
                 color:'black',
                 maxWidth: '90%',
     margin: '0 auto',
-    marginTop: '70px',
+    marginTop: '140px',
+    marginBottom:'50px',
     padding: '20px',
-    backgroundColor: '#ead9f4',
+    // backgroundColor: '#ead9f4',
     borderRadius: '8px',
     boxShadow: '0 0 10px rgba(0, 0, 0, 0.2)',
               }}>
@@ -94,7 +96,12 @@ onChange={(e) => setSelectedLanguage(e.target.value)}
                  </div>
     {/* <pre>{ans}</pre> */}
 
-    
+    {/* copy to clipboard button  */}
+<div className='bg-pink'>
+    <CopyToClip text={ans}/>
+</div>
+
+
 {/* adding code editor  */}
 <div className="edit">
 <Editor

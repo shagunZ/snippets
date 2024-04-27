@@ -3,8 +3,9 @@
 @tailwind utilities;
 
 body{
-  background-color: #0d0d0d;
+  background-color: white;
   color: #848484;
+  background-image:radial-gradient(circle farthest-corner at 10% 20%, #f7e8dd 0%, rgba(218, 112, 214, 0.3) 90%);
 }
 
 .ace-editor-container{
